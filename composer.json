@@ -1,0 +1,23 @@
+{
+  "name": "gephart/collections",
+  "type": "library",
+  "description": "Gephart Collections Component",
+  "keywords": [],
+  "homepage": "https://github.com/gephart/collections",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Michal Katuščák",
+      "email": "michal@katuscak.cz"
+    }
+  ],
+  "require": {
+    "php": ">=7.1"
+  },
+  "autoload": {
+    "psr-4": { "Gephart\\Collections\\": "src/" },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  }
+}
