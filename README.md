@@ -19,7 +19,7 @@ Using
 
 ### Collection without a specific type 
 
-```
+```php
 $collection = new Gephart\Collections\Collection();
 
 $collection->add("Something"); // Index - 0
@@ -34,7 +34,7 @@ $items = $collection->all(); // [0 => "Something"];
 
 ### Collection with a specific type 
 
-```
+```php
 class SpecificEntity { public $text = ""; }
 
 $item1 = new SpecificEntity();
