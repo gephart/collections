@@ -49,6 +49,6 @@ $collection->add($item1);
 $collection->add($item2);
 // Or use method collect(): $collection->collect([$item1, $item2]);
 
-$item = $collection->get(1); // 123
+$item = $collection->get(1);
 echo $item->text; // "second"
 ```
