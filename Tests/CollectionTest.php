@@ -87,4 +87,67 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(count($this->collection), 1);
     }
+
+    public function testMap()
+    {
+        [$a, $b] = $this->collection_non_type
+            ->collect(["a", "b"])
+            ->map(function(string $item){
+                return $item . "c";
+            })
+            ->all();
+
+        $this->assertEquals($a, "ac");
+        $this->assertEquals($b, "bc");
+    }
+
+    public function testFilter()
+    {
+        $count = $this->collection_non_type
+            ->collect(["a", "b"])
+            ->filter(function(string $item){
+                return $item === "b";
+            })
+            ->count();
+
+        $this->assertEquals($count, 1);
+    }
+
+    public function testEach()
+    {
+        $count = 0;
+
+        $this->collection_non_type
+            ->collect(["a", "b"])
+            ->each(function(string $item, int $key) use (&$count) {
+                if ($key == 0) {
+                    $this->assertEquals($item, "a");
+                    $count++;
+                } elseif ($key == 1) {
+                    $this->assertEquals($item, "b");
+                    $count++;
+                }
+                return true;
+            });
+
+        $this->assertEquals($count, 2);
+    }
+
+    public function testEachBreak()
+    {
+        $count = 0;
+
+        $this->collection_non_type
+            ->collect(["a", "b"])
+            ->each(function(string $item, int $key) use (&$count) {
+                $count++;
+
+                if ($item == "a") {
+                    return false;
+                }
+                return true;
+            });
+
+        $this->assertEquals($count, 1);
+    }
 }
