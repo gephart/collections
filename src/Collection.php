@@ -23,18 +23,32 @@ class Collection implements \IteratorAggregate, \Countable, \JsonSerializable
      */
     private $type;
 
+    /**
+     * @param string|null $type
+     */
     public function __construct(string $type = null)
     {
         $this->type = $type;
     }
 
+    /**
+     * @param array $items
+     * @return $this
+     */
     public function collect(array $items)
     {
         foreach ($items as $item) {
             $this->add($item);
         }
+
+        return $this;
     }
 
+    /**
+     * @param $item
+     * @return self
+     * @throws BadTypeException
+     */
     public function add($item)
     {
         if ($this->type && !$item instanceof $this->type) {
@@ -42,13 +56,22 @@ class Collection implements \IteratorAggregate, \Countable, \JsonSerializable
         }
 
         $this->list[] = $item;
+
+        return $this;
     }
 
-    public function get($index)
+    /**
+     * @param int $index
+     * @return mixed
+     */
+    public function get(int $index)
     {
         return $this->list[$index];
     }
 
+    /**
+     * @return array
+     */
     public function all(): array
     {
         return $this->list;
@@ -58,23 +81,71 @@ class Collection implements \IteratorAggregate, \Countable, \JsonSerializable
      * Unset item by index
      *
      * @param $index
+     * @return self
      */
     public function remove($index)
     {
         unset($this->list[$index]);
+        return $this;
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
         return count($this->list);
     }
 
+    /**
+     * @return string
+     */
     public function jsonSerialize()
     {
         return json_encode($this->list);
     }
 
-    public function getIterator() {
+    /**
+     * @return \ArrayIterator
+     */
+    public function getIterator()
+    {
         return new \ArrayIterator($this->list);
     }
+
+    /**
+     * @param callable $callback
+     * @return self
+     */
+    public function map(callable $callback)
+    {
+        $list = array_map($callback, $this->list);
+        return (new static($this->type))->collect($list);
+    }
+
+    /**
+     * @param callable $callback
+     * @return self
+     */
+    public function filter(callable $callback)
+    {
+        $list = array_filter($this->list, $callback);
+        return (new static($this->type))->collect($list);
+    }
+
+    /**
+     * @param callable $callback
+     * @return self
+     */
+    public function each(callable $callback)
+    {
+        foreach ($this->list as $key => $item) {
+            if (!$callback($item, $key)) {
+                break;
+            }
+        }
+
+        return $this;
+    }
+
 }
