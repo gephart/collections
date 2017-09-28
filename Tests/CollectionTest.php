@@ -1,7 +1,7 @@
 <?php
 
 use Gephart\Collections\Collection;
-use Gephart\Collections\Exception\BadTypeException;
+use Gephart\Collections\Exception\InvalidTypeException;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -45,7 +45,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         $was_exception = false;
         try {
             $this->collection->add(1);
-        } catch (BadTypeException $exception) {
+        } catch (InvalidTypeException $exception) {
             $was_exception = true;
         }
 

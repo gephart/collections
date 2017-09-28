@@ -1,7 +1,7 @@
 <?php
 
 namespace Gephart\Collections;
-use Gephart\Collections\Exception\BadTypeException;
+use Gephart\Collections\Exception\InvalidTypeException;
 
 /**
  * Collection
@@ -47,12 +47,12 @@ class Collection implements \IteratorAggregate, \Countable, \JsonSerializable
     /**
      * @param $item
      * @return self
-     * @throws BadTypeException
+     * @throws InvalidTypeException
      */
     public function add($item)
     {
         if ($this->type && !$item instanceof $this->type) {
-            throw new BadTypeException("Item to add to collection must be type of " . $this->type);
+            throw new InvalidTypeException("Item to add to collection must be type of " . $this->type);
         }
 
         $this->list[] = $item;
