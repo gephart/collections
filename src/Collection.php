@@ -21,7 +21,7 @@ class Collection implements \IteratorAggregate, \Countable, \JsonSerializable
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @param string|null $type
