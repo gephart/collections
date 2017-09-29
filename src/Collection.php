@@ -137,6 +137,17 @@ class Collection implements \IteratorAggregate, \Countable, \JsonSerializable
      * @param callable $callback
      * @return self
      */
+    public function sort(callable $callback)
+    {
+        $list = $this->list;
+        usort($list, $callback);
+        return (new static($this->type))->collect($list);
+    }
+
+    /**
+     * @param callable $callback
+     * @return self
+     */
     public function each(callable $callback)
     {
         foreach ($this->list as $key => $item) {

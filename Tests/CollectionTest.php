@@ -113,6 +113,18 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($count, 1);
     }
 
+    public function testSort()
+    {
+        $items = $this->collection_non_type
+            ->collect(["c", "a", "b"])
+            ->sort(function(string $a, string $b){
+                return $a < $b;
+            })
+            ->all();
+
+        $this->assertEquals($items, ["c", "b", "a"]);
+    }
+
     public function testEach()
     {
         $count = 0;
