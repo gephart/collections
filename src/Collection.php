@@ -1,6 +1,7 @@
 <?php
 
 namespace Gephart\Collections;
+
 use Gephart\Collections\Exception\InvalidTypeException;
 
 /**
@@ -158,5 +159,4 @@ class Collection implements \IteratorAggregate, \Countable, \JsonSerializable
 
         return $this;
     }
-
 }
