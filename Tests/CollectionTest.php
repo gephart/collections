@@ -8,17 +8,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 class CollectionTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var Collection
-     */
-    private $collection;
+    private Collection $collection;
 
-    /**
-     * @var Collection
-     */
-    private $collection_non_type;
+    private Collection $collection_non_type;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->collection = new Collection(stdClass::class);
         $this->collection_non_type = new Collection();
@@ -42,14 +36,14 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
 
     public function testAddBadException()
     {
-        $was_exception = false;
+        $wasException = false;
         try {
             $this->collection->add(1);
         } catch (InvalidTypeException $exception) {
-            $was_exception = true;
+            $wasException = true;
         }
 
-        $this->assertTrue($was_exception);
+        $this->assertTrue($wasException);
     }
 
     public function testGet()
@@ -59,9 +53,9 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
 
         $this->collection->add($item);
 
-        $gets_item = $this->collection->get(0);
+        $getsItem = $this->collection->get(0);
 
-        $this->assertEquals($gets_item->title, "Test");
+        $this->assertEquals($getsItem->title, "Test");
     }
 
     public function testAll()
@@ -90,22 +84,22 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
 
     public function testMap()
     {
-        [$a, $b] = $this->collection_non_type
+        [$left, $right] = $this->collection_non_type
             ->collect(["a", "b"])
-            ->map(function(string $item){
+            ->map(function (string $item) {
                 return $item . "c";
             })
             ->all();
 
-        $this->assertEquals($a, "ac");
-        $this->assertEquals($b, "bc");
+        $this->assertEquals($left, "ac");
+        $this->assertEquals($right, "bc");
     }
 
     public function testFilter()
     {
         $count = $this->collection_non_type
             ->collect(["a", "b"])
-            ->filter(function(string $item){
+            ->filter(function (string $item) {
                 return $item === "b";
             })
             ->count();
@@ -117,7 +111,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     {
         $items = $this->collection_non_type
             ->collect(["c", "a", "b"])
-            ->sort(function(string $a, string $b){
+            ->sort(function (string $a, string $b) {
                 return $a < $b;
             })
             ->all();
@@ -131,7 +125,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
 
         $this->collection_non_type
             ->collect(["a", "b"])
-            ->each(function(string $item, int $key) use (&$count) {
+            ->each(function (string $item, int $key) use (&$count) {
                 if ($key == 0) {
                     $this->assertEquals($item, "a");
                     $count++;

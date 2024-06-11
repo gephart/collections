@@ -2,7 +2,11 @@
 
 namespace Gephart\Collections;
 
+use ArrayIterator;
+use Countable;
 use Gephart\Collections\Exception\InvalidTypeException;
+use IteratorAggregate;
+use JsonSerializable;
 
 /**
  * Collection
@@ -11,7 +15,7 @@ use Gephart\Collections\Exception\InvalidTypeException;
  * @author Michal Katuščák <michal@katuscak.cz>
  * @since 0.5
  */
-class Collection implements \IteratorAggregate, \Countable, \JsonSerializable
+class Collection implements IteratorAggregate, Countable, JsonSerializable
 {
     use ArrayFunctionsTrait;
 
@@ -101,9 +105,9 @@ class Collection implements \IteratorAggregate, \Countable, \JsonSerializable
         return json_encode($this->list);
     }
 
-    public function getIterator(): \ArrayIterator
+    public function getIterator(): ArrayIterator
     {
-        return new \ArrayIterator($this->list);
+        return new ArrayIterator($this->list);
     }
 
     /**
