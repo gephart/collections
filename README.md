@@ -1,11 +1,11 @@
 Gephart Collections
 ===
 
-[![Build Status](https://travis-ci.org/gephart/collections.svg?branch=master)](https://travis-ci.org/gephart/collections)
+[![php](https://github.com/gephart/collections/actions/workflows/php.yml/badge.svg?branch=master)](https://github.com/gephart/collections/actions)
 
 Dependencies
 ---
- - PHP >= 7.1
+ - PHP >= 7.4
 
 Instalation
 ---
